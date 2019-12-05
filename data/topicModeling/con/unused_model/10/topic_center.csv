@@ -1,0 +1,11 @@
+,X,Y,Topic,Topic_Words,Colors,Topic_Proportion
+0,0.2971533928015538,0.016789388679737043,1,"['manag', 'poor', 'poor_manag', 'train', 'sale', 'move', 'leadership', 'slow', 'horribl', 'favorit']",#4a10fd,0.1182
+1,-0.05044577666187756,-0.12247581007294728,2,"['break', 'short', 'short_break', 'employe', 'environ', 'constant', 'level', 'close', 'process', 'staf']",#0b6aa8,0.116
+2,-0.02129228244896587,-0.01144611966799563,3,"['benefit', 'could', 'call', 'dont', 'upper', 'upper_manag', 'worker', 'better', 'pace', 'fast']",#abbcae,0.0887
+3,-0.019973153697605314,-0.010370354074811837,4,"['shift', 'difficult', 'busi', 'expect', 'due', 'compens', 'extrem', 'demand', 'heavi', 'supervisor']",#3d2665,0.0894
+4,-0.022346963747262655,-0.01248216920570637,5,"['day', 'schedul', 'peopl', 'care', 'health', 'commun', 'cultur', 'week', 'goal', 'famili']",#6c57ce,0.0992
+5,-0.06434867273090177,0.22864929984035126,6,"['time', 'littl', 'cut', 'requir', 'person', 'staff', 'start', 'min', 'condit', 'contractor']",#315c03,0.0713
+6,-0.023116519889699403,-0.013193643695402045,7,"['advanc', 'lunch', 'life', 'bad', 'balanc', 'opportun', 'life_balanc', 'posit', 'limit', 'career']",#5252df,0.1216
+7,-0.03281455923486231,-0.02533683701683978,8,"['hour', 'low', 'hard', 'custom', 'low_pay', 'worklif', 'worklif_balanc', 'balanc', 'team', 'promot']",#a72cc2,0.126
+8,-0.03704179391255113,-0.03439324959278236,9,"['pay', 'chang', 'lot', 'sometim', 'overtim', 'secur', 'salari', 'hire', 'corpor', 'rate']",#85c3e4,0.0912
+9,-0.025773670477827876,-0.015740505193602865,10,"['lack', 'stress', 'rais', 'growth', 'support', 'terribl', 'system', 'paid', 'issu', 'didnt']",#641049,0.0785

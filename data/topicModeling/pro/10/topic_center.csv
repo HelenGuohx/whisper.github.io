@@ -1,0 +1,11 @@
+,X,Y,Topic,Topic_Words,Colors,Topic_Proportion
+0,1.0907237024677563,-0.0702306225502105,1,"['free', 'employe', 'discount', 'schedul', 'day', 'decent', 'vacat', 'compens', 'hour_lunch', 'flexibl_hour']",#3433ce,0.0688
+1,1.0910314074355112,-0.0695139133068594,2,"['free', 'employe', 'discount', 'schedul', 'day', 'decent', 'vacat', 'compens', 'hour_lunch', 'free_food']",#af1475,0.071
+2,-0.4165542601185997,-0.4922185813649371,3,"['benefit', 'manag', 'lot', 'worker', 'decent_pay', 'easi', 'health_benefit', 'health_care', 'plan', 'etc']",#7f202d,0.1165
+3,-0.40536806809964254,0.11290086942930244,4,"['pay_benefit', 'advanc', 'help', 'salari', 'worklif', 'coffe', 'provid', 'excel_benefit', 'pto', 'packag']",#5c84a3,0.1013
+4,-0.39067666927510447,-0.001675038575033552,5,"['pay', 'hour', 'flexibl', 'cowork', 'balanc', 'cultur', 'flexibl_schedul', 'insur', 'paid', 'famili']",#322de8,0.1133
+5,-0.41527593864757517,-0.40641046032170725,6,"['health', 'friendli', 'food', 'atmospher', 'life_balanc', 'overtim', 'benefit_pay', 'sometim', 'paid_time', 'awesom']",#c9d2d9,0.0902
+6,0.15305667289859642,0.42763814157001473,7,"['lunch', 'free', 'free_lunch', 'break', 'time', 'meet', 'fast', 'week', 'fast_pace', 'educ']",#ffc61b,0.1213
+7,-0.3695860119704614,0.6696618230423574,8,"['peopl', 'environ', 'excel', 'team', 'time', 'nice', 'home', 'care', 'incent', 'lunch_break']",#d64429,0.1253
+8,-0.29912594704992534,0.002726835303033049,9,"['train', 'custom', 'fun', 'pace', 'gym', 'abil', 'reward', 'vacat_time', 'meet_peopl', 'amaz']",#b32289,0.0896
+9,-0.038224887640555524,-0.1728790532259597,10,"['opportun', 'learn', 'paid', 'product', 'holiday', 'life', 'servic', 'discount', 'support', 'drink']",#8df437,0.1028
