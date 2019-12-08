@@ -12,6 +12,8 @@ class CompanyProfile{
         this.divProfile = null //d3.select('#profile');
 
 
+
+
     };
     /*
     * create CompanyProfile
@@ -24,13 +26,10 @@ class CompanyProfile{
         
         //sort by rank
         this.companyProfile.sort( function (a,b) {
-            a = a.Rank;
-            b = b.Rank;
-            if (+a && +b ) {
-                return +a > +b
-            }
-            return -1
+            // console.log("company profile", +(a.Rank));
+            return +(a.Rank) > +(b.Rank)
         });
+
 
         // Division for logo
         // let logo = this.divProfile.append('div')
@@ -43,9 +42,10 @@ class CompanyProfile{
         //     .attr('height',100)
         // ;
         console.log("this.companyRank", this.companyRank);
+        console.log('this.companyProfile', this.companyProfile);
 
         // Division for Header
-        console.log('this.companyProfile[this.companyRank-1]', this.companyProfile[this.companyRank]);
+        console.log('this.companyProfile[this.companyRank]', this.companyProfile[this.companyRank]);
         let header = this.divProfile.append("div")
             .attr("id", "headerDiv")
             .append("h4")
@@ -236,43 +236,13 @@ class CompanyProfile{
 
 
         let compProf = this.companyProfile;
-        console.log("Root.desendants", root.descendants())
+        // console.log("Root.desendants", root.descendants())
         sector.selectAll("path")
             .data(root.descendants())
             .enter()
             .append("g")
             .style("opacity", 0)
-            // .attr("fill-opacity", d => {
-            //     let opacity = 0;
-            //     if(d.depth == 1) {
-            //         if(d.data.name == compProf[this.companyRank-1].Sector) {
-            //             opacity = .9
-            //         } else {
-            //             opacity = .5
-            //         }
-            //     } else if (d.depth == 2) {
-            //         if (d.parent.data.name == compProf[this.companyRank - 1].Sector) {
-            //             opacity = .9
-            //         } else {
-            //             opacity = .2
-            //         }
-            //     }
-            //     return opacity;
-            //
-            // })
 
-            // .attr("class", d => {
-            //     let class_name;
-            //     if (d.depth == 1){
-            //         if(d.data.name == compProf[this.companyRank-1].Sector || d.parent.data.name == compProf[this.companyRank-1].Sector) {
-            //             class_name = `selected ${d.data.name} ${d.parent.data.name}}`
-            //         } else {
-            //             return `${d.data.name} ${d.parent.data.name}`
-            //         }
-            //     } else {
-            //         return "Root"
-            //     }
-            // })
             .attr("class", d => {
                 let class_name;
                 if(d.depth == 1) {
