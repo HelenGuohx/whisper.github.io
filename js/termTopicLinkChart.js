@@ -9,16 +9,17 @@ class TermTopicLinkChart {
         this.conTopicTerm = conTopicTerm;
         let divlink = d3.select('#term-topic-link');
         let divbound = divlink.node().getBoundingClientRect();
-        this.boundWidth = divbound.width;
-        this.boundHeight = divbound.height;
         this.margin = {
-            "top": 200,
-            "left": 150,
+            "top": 100,
+            "left": 60,
         };
+        this.boundWidth = divbound.width //- 2*this.margin.left;
+        this.boundHeight = divbound.height //- 2* this.margin.top;
+
 
         this.svg = divlink.append("svg")
-            .attr("width", this.boundWidth)
-            .attr("height", this.boundHeight)
+            .attr("width", divbound.width)
+            .attr("height", divbound.height )
         ;
         // public variables
         this.termDict = []; //an array of objects
@@ -34,12 +35,12 @@ class TermTopicLinkChart {
         let conColor = "#d62728";
         let termColor = 'purple';
         let elementRadius = 5;
-        let radius = Math.min(this.boundWidth,this.boundHeight)/2 - this.margin.left //this.boundWidth - 2*this.margin.top;
+        let radius = Math.min(this.boundWidth,this.boundHeight)/2- this.margin.top ;//this.boundWidth - 2*this.margin.top;
         let barWidth = 200;
         let barHeight = 10;
         let barMargin = {
-            top: 50,
-            left: 50,
+            top: 10,
+            left: 10,
         };
         let opacityLow = 0.4;
         let opacityHigh = 1;
@@ -100,7 +101,8 @@ class TermTopicLinkChart {
                 //console.log('ele', ele);
                 let selected  = d3.selectAll(`path.${ele.id}`);
                 selected.style('opacity', opacityHigh);
-                selected.style('stroke-width', 3)
+                selected.style('stroke-width', 3);
+                selected.raise();
 
                 let selectedBar = d3.selectAll(`g.${ele.id} > rect`);
                 selectedBar.attr('class',"link-bar-highlighted");
@@ -108,7 +110,8 @@ class TermTopicLinkChart {
 
                 let selectedTopic = d3.selectAll(`#${ele.topicId}`);
                 selectedTopic.selectAll('circle').style('opacity',opacityHigh)
-                selectedTopic.selectAll('text').attr('transform', 'scale(1.5)')
+                selectedTopic.selectAll('text').attr('transform', 'scale(1.5)');
+                selectedTopic.raise();
 
                 let selectedTerm = d3.selectAll(`#${ele.termId}`);
                 //selectedTerm.selectAll('circle').attr('opacity',opacityHigh);
@@ -227,13 +230,14 @@ class TermTopicLinkChart {
             .range([0,barWidth]);
 
         let ybarScale = d3.scaleBand()
-            .range([0, this.boundHeight - 2*barMargin.top])
+            .range([0, this.boundHeight - barMargin.top])
             .padding(0.25)
         ;
 
 
         // define circle center
         let linkChart = this.svg.append('g')
+            // .attr('translate',`${this.margin.left}, ${this.margin.top}`)
         ;
         console.log('linkchart', linkChart);
 

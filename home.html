@@ -20,35 +20,32 @@
 <body>
 <div class="header">
     <div class="nav">
-        <ul>
-            <li id="navButton-index">
-                <a  id = "link" href="index.html">Index</a>
-            </li>
+        <ul id = "navButton">
+<!--            <li id="navButton-index">-->
+<!--                <a  id = "link" href="index.html">-->
+<!--                    <span class="button-line"></span>-->
+<!--                    <span class="hover-color"></span>-->
+<!--                    <span>Index</span>-->
+<!--                </a>-->
+<!--            </li>-->
             <li id = "navButton-home">
-                <a href="home.html">
-                    <div class="button-line"></div>
-                    <div class="hover-color"></div>
+                <a>
+
                     <span>Home</span>
                 </a>
             </li>
             <li id = "navButton-data">
                 <a >
-                    <div class="button-line"></div>
-                    <div class="hover-color"></div>
                     <span>Data</span>
                 </a>
             </li>
             <li id = "navButton-processbook">
                 <a >
-                    <div class="button-line"></div>
-                    <div class="hover-color"></div>
                     <span>Process Book</span>
                 </a>
             </li>
             <li id = "navButton-about">
                 <a>
-                    <div class="button-line"></div>
-                    <div class="hover-color"></div>
                     <span>About</span>
                 </a>
             </li>
@@ -73,12 +70,13 @@
                 <li name = "#term-topic-link-title">
                     <a>Topic and Term Link</a>
                 </li>
-                <li name = "#term-topic-heatmap-title">
-                    <a>Topic Term Heatmap</a>
-                </li>
                 <li name = "#topic-modeling-title">
                     <a >Topic Modeling</a>
                 </li>
+                <li name = "#term-topic-heatmap-title">
+                    <a>Topic Term Heatmap</a>
+                </li>
+
             </ul>
         </div>
 
@@ -87,43 +85,43 @@
             <div id ="dropdown">
             </div>
             <div class="general-container">
-                <div>
-                    <div id = 'compmap'>
-                        <div id="compmap-btn">
-                            <label class="dropdown">
-                                <span>Selected Company</span>
-                                <span class="dd-button" value = '1'></span>
-                                <input type="checkbox" class="dd-input" id="compmap-input">
-                                <div class="dd-menu"></div>
-                            </label>
-<!--                            <select class="dropdown-btn">-->
-<!--                                <option selected="selected">Walmart</option>-->
-<!--                                <option>Apple</option>-->
-<!--                                <option>Target</option>-->
-<!--                                <option>JP Morgan</option>-->
-<!--                            </select>-->
+                <div id="compmap-btn">
+                    <div>Selected Company:</div>
+                    <label class="dropdown">
+                        <div class="dd-button"></div>
+                        <input type="checkbox" class="dd-input" id="compmap-input">
+                        <div class="dd-menu">
+                            <div class="dd-menu-tabs">
+                                <input type="radio"  id = "Company_Name" />
+                                <label for="Company_Name">A-Z</label>
+                                <input type="radio"  id = "Rank" />
+                                <label for="Rank">Rank</label>
+                            </div>
                         </div>
-                    </div>
-                    <div class="general-profit-section">
-                        <div id="attr1">
-                            <div class="dropdownDistr"></div>
-                            <div class="distrBar"></div>
-                        </div>
-                        <div id="attr2">
-                            <div class="dropdownDistr"></div>
-                            <div class="distrBar"></div>
-                        </div>
-                    </div>
+                    </label>
                 </div>
 
+                <div class="general-profit-section">
+                    <div id="attr1">
+                        <div class="dropdownDistr"></div>
+                        <div class="distrBar"></div>
+                    </div>
+                    <div id="attr2">
+                        <div class="dropdownDistr"></div>
+                        <div class="distrBar"></div>
+                    </div>
+                </div>
                 <div id = "profile"></div>
+                <div id = 'compmap'></div>
+
+
 
             </div>
 
 
 
-            <div class="general-other-section">
-            </div>
+<!--            <div class="general-other-section">-->
+<!--            </div>-->
 
         </div>
 
@@ -132,30 +130,33 @@
                 <div class="title" id = "term-topic-link-title">Topic and Term Link</div>
                 <div id = "term-topic-link"></div>
             </div>
+
+             <div class="title" id = "topic-modeling-title">Topic Modeling</div>
+                <div class="topic-section">
+                    <div class="model-title">Pro Model</div>
+                    <div class="tm-container">
+                        <div id = "pro-dropdown" class="model-dropdown-bg"></div>
+                        <div id = "pro-bar-dropdown" class="model-dropdown-bg"></div>
+                        <div id ="pro-model"></div>
+                        <div id = "proBar"></div>
+                    </div>
+                </div>
             <div class="topic-section">
+                <div class="model-title">Con Model</div>
+                <div class="tm-container">
+                    <div id = "con-dropdown" class="model-dropdown-bg"></div>
+                    <div id = "con-bar-dropdown" class="model-dropdown-bg"></div>
+                    <div id ="con-model"></div>
+                    <div id = "conBar"></div>
+                </div>
+            </div>
+
+            <div class="topic-section" >
                 <div class="title" id = "term-topic-heatmap-title">Topic Term Heatmap</div>
                 <div id = "term-topic-heatmap">
                     <div id="pro-heatmap"> </div>
                     <div id="con-heatmap"> </div>
                 </div>
-
-            </div>
-            <div class="topic-section">
-                <div class="title" id = "topic-modeling-title">Topic Modeling</div>
-                <div class="model-title">Pro Model</div>
-                <div class="tm-container">
-                    <div id = "pro-dropdown" class="model-dropdown-bg"></div>
-                    <div id = "pro-bar-dropdown" class="model-dropdown-bg"></div>
-                    <div id ="pro-model"></div>
-                    <div id = "proBar"></div>
-                </div>
-            <div class="model-title">Con Model</div>
-            <div class="tm-container">
-                <div id = "con-dropdown" class="model-dropdown-bg"></div>
-                <div id = "con-bar-dropdown" class="model-dropdown-bg"></div>
-                <div id ="con-model"></div>
-                <div id = "conBar"></div>
-            </div>
             </div>
 
 
@@ -178,20 +179,40 @@
 
 <script>
     $(document).ready(function () {
+        $('#navButton-home').css('background-color', '#99ffb3');
+        $('#navButton li').click(function (e) {
+            $('#navButton li').each(function(){
+                // console.log("this", this);
+                $(this).css('background-color', 'white');
+            });
+            $(this).css('background-color', '#99ffb3');
+            console.log('nav button this', this);
+
+        })
 
         $('#side-menu-button').click(function () {
             $('#side-menu-ul').toggle()
         });
 
         $('#side-menu-ul li').click(function(){
+            $('#side-menu-ul').hide();
             let selected = $(this).attr('name');
             let scroll_offset = $(selected).offset().top;
             console.log(selected);
             $("body, html").animate({
-                scrollTop: scroll_offset
+                scrollTop: scroll_offset -50
             }, 500);
         })
+
+
 });
+  //   $(document).mouseup(function(e){
+  //           console.log('_con',e);
+  //         var _con = $('#dd-menu');   // 设置目标区域
+  //         if(_con.is(e.target) && _con.has(e.target).length === 0) { // Mark 1
+  //             _con.attr('display', 'none')   // 功能代码
+  //         }
+  // })
 </script>
 
 

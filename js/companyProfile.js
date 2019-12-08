@@ -5,17 +5,12 @@ class CompanyProfile{
    *
    * @param
    */
-    constructor (companyProfile, companyHQ){
+    constructor (companyProfile){
         this.companyProfile = companyProfile;
-        this.companyHQ = companyHQ;
 
         this.companyRank = 1;
-        this.divProfile = d3.select('#profile');
-        // let svgModelBounds = this.divProfile.node().getBoundingClientRect();
-        // this.svgWidth = svgModelBounds.width;
-        // this.svgHeight = ;
-        // console.log("svgWidth", this.svgWidth);
-        // console.log("svgHeight", this.svgHeight);
+        this.divProfile = null //d3.select('#profile');
+
 
     };
     /*
@@ -25,20 +20,32 @@ class CompanyProfile{
     * */
     update(compRank){
         this.companyRank = compRank;
+        this.divProfile= d3.select('#profile').append('div').attr('class', 'profile-box');
+        
+        //sort by rank
+        this.companyProfile.sort( function (a,b) {
+            a = a.Rank;
+            b = b.Rank;
+            if (+a && +b ) {
+                return +a > +b
+            }
+            return -1
+        });
 
         // Division for logo
-        let logo = this.divProfile.append('div')
-            .attr("id", "logoDiv")
-            .append('img')
-            .attr('class','profile-img')
-            .attr('src',  this.companyRank>1?`assets/${this.companyRank}`.jpg:'#' )
-            .attr('alt', 'logo')
-            .attr('width', 'auto')
-            .attr('height',100)
-        ;
-
+        // let logo = this.divProfile.append('div')
+        //     .attr("id", "logoDiv")
+        //     .append('img')
+        //     .attr('class','profile-img')
+        //     .attr('src',  this.companyRank>1?`assets/${this.companyRank}`.jpg:'#' )
+        //     .attr('alt', 'logo')
+        //     .attr('width', 'auto')
+        //     .attr('height',100)
+        // ;
+        console.log("this.companyRank", this.companyRank);
 
         // Division for Header
+        console.log('this.companyProfile[this.companyRank-1]', this.companyProfile[this.companyRank]);
         let header = this.divProfile.append("div")
             .attr("id", "headerDiv")
             .append("h4")
@@ -63,7 +70,7 @@ class CompanyProfile{
         ;
         item.append("span")
             .attr("id", "infoCEO")
-            .text(this.companyHQ[this.companyRank-1].CEO)
+            .text(this.companyProfile[this.companyRank-1].CEO)
         ;
 
         // CEO Title
@@ -74,7 +81,7 @@ class CompanyProfile{
         ;
         item.append("span")
             .attr("id", "infoCEOTitle")
-            .text(this.companyHQ[this.companyRank-1].CEO_Title)
+            .text(this.companyProfile[this.companyRank-1].CEO_Title)
         ;
 
         // HeadQuarter
@@ -85,7 +92,7 @@ class CompanyProfile{
         ;
         item.append("span")
             .attr("id", "infoHQ")
-            .text(this.companyHQ[this.companyRank-1].HQ_Location)
+            .text(this.companyProfile[this.companyRank-1].HQ_Location)
         ;
 
         // Sector
@@ -118,7 +125,7 @@ class CompanyProfile{
         ;
         item.append("span")
             .attr("id", "infoWebsite")
-            .text(this.companyHQ[this.companyRank-1].Fortune_Site)
+            .text(this.companyProfile[this.companyRank-1].Fortune_Site)
         ;
 
         // Profit
@@ -140,7 +147,7 @@ class CompanyProfile{
         ;
         item.append("span")
             .attr("id", "infoRevenue")
-            .text(this.companyProfile[this.companyRank-1]["Revenues(m)"])
+            .text(this.companyProfile[this.companyRank-1]["Revenues(B)"])
         ;
 
         // Employee
@@ -181,7 +188,7 @@ class CompanyProfile{
         for (let s of sectors) {
             let lst = [];
             for (let c of groupedSector.get(s)){
-                lst.push({"name": c.Company_Name, "size": parseFloat(c["Revenues(m)"].replace( "$", '').replace(",", ""))})
+                lst.push({"name": c.Company_Name, "size": parseFloat(c["Revenues(B)"].replace( "$", '').replace(",", ""))})
             }
             data.children.push({"name": s, "children" : lst})
         }
@@ -298,7 +305,19 @@ class CompanyProfile{
         function updateSunBurst(){
             d3.selectAll(".node").style("opacity", 0);
             d3.selectAll(".Sector").style("opacity", .3);
-            d3.selectAll(".selected").style("opacity", .9)
+            d3.selectAll(".selected").style("opacity", .9).selectAll('text').remove();
+            let selectSector = d3.selectAll(".selected").filter(function () {
+                // console.log("node",d3.select(this).property('class') );
+                //  console.log("node",d3.select(this).node().class );
+                return d3.select(this).attr('class').includes("Sector")
+            })
+            selectSector.append('text')
+                .text(function(d){
+                    console.log("seleced d", d);
+                    return d.data.name
+                })
+                .attr('text-anchor', 'middle')
+            ;
         }
         updateSunBurst();
 
@@ -317,6 +336,8 @@ class CompanyProfile{
             console.log("Selection", selection);
             d3.selectAll(".selected")
                 .classed("selected", false)
+                .selectAll('text')
+                .remove()
             ;
 
             selection.classed("selected", true)
@@ -324,8 +345,13 @@ class CompanyProfile{
 
             let class_name = selection.attr("class").split(" ")[0];
             // console.log("class_name: ", class_name.split(" ")[0]);
+            selection.append('text')
+                .text(class_name)
+                .attr('text-anchor', 'middle')
+            ;
             d3.selectAll(`.${class_name}`)
                 .classed("selected", true)
+
 
 
             updateSunBurst();
@@ -345,20 +371,6 @@ class CompanyProfile{
         }
 
 
-
-        // sector.selectAll(".node")
-        //     .append("text")
-        //     .attr("transform", d => `translate(${arc.centroid(d)})rotate(${computeTextRotation(d)})`)
-        //     .attr("dx", "-20")
-        //     .attr("dy", ".1em")
-        //     .style("font-size", "8px")
-        //     .text(d => d.parent ? d.data.name : "")
-        //
-        // function computeTextRotation(d) {
-        //     var angle = (d.x0 + d.x1) / Math.PI * 90;
-        //     return (angle < 90 || angle > 270) ? angle: angle + 180;
-
-        // }
 
 
 

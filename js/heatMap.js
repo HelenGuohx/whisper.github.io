@@ -12,9 +12,9 @@ class HeatMap{
 
         // Initializes the height and width
         this.bbox = d3.select(`#pro-heatmap`).node().getBoundingClientRect();
-        this.height = 600; //this.bbox.height;
+        this.height = 700; //this.bbox.height;
         this.width = this.bbox.width;
-        this.margin = {top: 30, right: 30, bottom: 30, left: 30};
+        this.margin = {top: 30, right: 30, bottom: 50, left: 30};
 
         this.proColor = "#1f77b4",// baseline color for default topic circles and overall term frequencies
         this.conColor = "#d62728";
@@ -38,7 +38,7 @@ class HeatMap{
         let topicPropDiv = d3.select(`#${what}-heatmap`)
             .append("div")
             .attr("class", "heatmap-div")
-            .attr("height", this.height - this.margin.top - this.margin.bottom - 10)
+            .attr("height", this.height - this.margin.top - this.margin.bottom)
             .attr("width", this.width - this.margin.left - this.margin.right)
         ;
     }
@@ -109,7 +109,7 @@ class HeatMap{
         let canvas = topicPropDiv
             .append("svg")
             .attr("id", `heatmap-${what}`)
-            .attr("height", this.height - this.margin.top - this.margin.bottom - 10)
+            .attr("height", this.height - this.margin.top - this.margin.bottom )
             .attr("width", this.width - this.margin.left - this.margin.right)
             .append("g")
             .attr("transform", `translate(${this.margin.left}, ${this.margin.top})`)
@@ -158,7 +158,7 @@ class HeatMap{
 
         let yScale = d3.scaleBand()
             .domain(terms)
-            .range([this.margin.top, this.height-this.margin.bottom-100])
+            .range([this.margin.top, this.height-2*this.margin.bottom-100])
             .padding(.05)
         ;
 
@@ -169,13 +169,13 @@ class HeatMap{
 
         canvas.append("g")
             .attr("id", "x-axis")
-            .attr("transform", `translate(100, ${this.height-this.margin.right-150})`)
+            .attr("transform", `translate(100, ${this.height-2*this.margin.bottom - 150})`)
             .call(xAxis);
 
 
         canvas.append("g")
             .attr("id", "x-axis-label")
-            .attr("transform", `translate(250, ${this.height-this.margin.right-100})`)
+            .attr("transform", `translate(300, ${this.height-2*this.margin.bottom-100})`)
             .append("text")
             .text("Topics")
 
@@ -205,6 +205,7 @@ class HeatMap{
 
 
         function updateHeatmap(selectedTopic, what) {
+
             let terms = getTerms(getData(selectedTopic));
 
             yScale.domain(terms);
@@ -239,41 +240,47 @@ class HeatMap{
                     .style("fill", function(d) { return myColor(d.Beta)} )
             ;
             // console.log("hey")
-          //   let betaList = dat.map(d => {
-          //       if(d.Beta && +d.Beta ){
-          //           return +d.Beta
-          //       }
-          //   });
-          //   betaList.sort();
-          //   let legendData = [d3.quantile(betaList, 0), d3.quantile(betaList, 0.25), d3.quantile(betaList, 0.5), d3.quantile(dat, 0.75),d3.quantile(betaList, 1) ]
-          //   let legendElementWidth = 50;
-          //   let gridSize = 20;
-          //   let height = 400;
-          //   let format = d3.format('.04f')
-          //
-          //   var legend = canvas.append('g')
-          //       .attr('class', 'legend')
-          //       .attr('transform', 'translate(20,400)')
-          //       .selectAll("rect")
-          //       .data(legendData)
-          //       .enter()
-          //   ;
-          //
-          //
-          // legend.append("rect")
-          //   .attr("x", function(d, i) { return legendElementWidth * i; })
-          //   .attr("y", 0)
-          //   .attr("width", legendElementWidth)
-          //   .attr("height", gridSize / 2)
-          //   .style("fill", function(d, i) { return myColor(d); });
-          //
-          // console.log("legendData", legendData);
+            // let betaList = dat.map(d => {
+            //     if(d.Beta && +d.Beta ){
+            //         return +d.Beta
+            //     }
+            // });
+            // betaList.sort();
+            let [minVal, maxVal] = d3.extent(dat, d => Number(d.Beta));
+            let diff = maxVal - minVal;
+            let legendData = [0, minVal + diff *0.25, minVal + diff *0.5, minVal + diff *0.75, maxVal];
+            let legendElementWidth = 50;
+            let gridSize = 20;
 
-          // legend.append("text")
-          //   .attr("class", "mono")
-          //   .text(function(d) { return "≥ " + Math.round(d); })
-          //   .attr("x", function(d, i) { return legendElementWidth * i; })
-          //   .attr("y", height + gridSize);
+            //remove legend
+            canvas.select('.legend').remove();
+
+            var legend = canvas.append('g')
+                .attr('class', 'legend')
+                .attr('transform', `translate(250,550)`)
+                .selectAll("rect")
+                .data(legendData)
+                .enter()
+            ;
+
+
+          legend.append("rect")
+            .attr("x", function(d, i) { return legendElementWidth * i; })
+            .attr("y", 0)
+            .attr("width", legendElementWidth)
+            .attr("height", gridSize / 2)
+            .style("fill", function(d, i) { return myColor(d); });
+
+          console.log("legendData", legendData);
+
+          legend.append("text")
+            .attr("class", "legend-text")
+            .text(d => d3.format('.1s')(d) ) //function(d) { return "≥ " + d3.format('.4e') })
+            .attr("x", function(d, i) { return legendElementWidth * i + legendElementWidth/2 ; })
+            .attr("y", gridSize)
+              .attr('dy', '0.5em')
+              .style('text-anchor', 'middle')
+          ;
 
 
 

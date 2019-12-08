@@ -11,53 +11,61 @@ body {
     top: 0;
     height: 60px;
     width: 100%;
-    background:white;
-    /*border-bottom: 4px solid #99ffb3;*/
+    /*background:white;*/
+    /*border-bottom: 3px solid #99ffb3;*/
     z-index: 900;
     transition: all 0.35s ease-in-out;
 }
 .nav {
     left: 3%;
     bottom: 0px;
-    width: 94%;
+    width: 100%;
     height: 100%;
+    font-size: 1.3rem;
 
 }
 .button-line {
     height: 20px;
-    border-right: 1px solid rgba(0, 0, 0, 0.12);
+    border-right: 1px solid rgba(0, 0, 0, 0.3);
     left:0;
     top: 50%;
     margin-top: -10px;
     margin:auto 15px;
 }
 .nav ul {
-   /* display: block;*/
-    display: flex;
-    flex-wrap: nowrap;
+  /*list-style-type: none;*/
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
 }
 .nav li {
-    display: block;
+    float: left;
+
 }
-.nav a {
-    display: flex;
+.nav li a {
+    display: block;
+    text-align: center;
+    padding: 16px;
+    text-decoration: none;
     align-items: center;
     text-decoration: none;
     color:rgba(0, 0, 0, 0.5);
-    white-space:nowrap;
+    /*white-space:nowrap;*/
 }
 
-.nav a :hover {
-    background-color: #99ffb3;
+.nav li a:hover  {
+    background-color: rgba(153,255,179,0.5);
 }
-.hover-color {
-    /*position: absolute; */
-    top: 0;
-    right: 0;
-    height: 100%;
-    width: 100%;
-    transition: all 0.5s ease-in-out;
+.nav li a:active {
+    background-color:rgba(153,255,179,1);
 }
+/*.hover-color {*/
+/*    top: 0;*/
+/*    right: 0;*/
+/*    height: 100%;*/
+/*    width: 100%;*/
+/*    transition: all 0.5s ease-in-out;*/
+/*}*/
 
 /**
  * main
@@ -71,18 +79,7 @@ body {
 	display: flex;
 	flex-wrap: wrap; /* make sure it wraps*/
 }
-.main-tab label {
-    order: 1; /*Put the labels first*/
-	display: block;
-	padding: 1rem 2rem;
-	margin-right: 0.2rem;
-	cursor: pointer;
-    /*background: #90CAF9;*/
-    font-weight: bold;
-    transition: background ease 0.2s;
-    font-size: 1.6rem;
-    color: grey;
-}
+
 .main-tab .content {
   order: 99; /*Put the main-tab last */
   flex-grow: 1;
@@ -93,16 +90,7 @@ body {
   min-height: 50rem;
 
 }
-.main-tab input[type="radio"] {
-	display: none;
-}
-.main-tab input[type="radio"]:checked + label {
-	background: #90CAF9;
-    color:white;
-}
-.main-tab input[type="radio"]:checked + label + .content {
-	display: block;
-}
+
 
 @media (max-width: 45em) {
   .main-tab .content,
@@ -187,7 +175,7 @@ body {
 }
 .general-container {
     display: grid;
-    grid-template-columns: 2fr 1fr;
+    grid-template-columns: 1fr 2fr;
 }
 
 
@@ -195,10 +183,11 @@ body {
 /*
 style for company general info
 */
-#profile {
+.profile-box {
     border: 1px solid #8f9dad;
     margin: auto 70px;
     padding: 30px;
+    margin-top: -50px;
 
 }
 
@@ -232,7 +221,7 @@ style for company general info
 
 #infoList {
     padding-left: 0;
-    margin-bottom: 50px;
+    /*margin-bottom: 50px;*/
 }
 
 
@@ -251,15 +240,7 @@ style for company general info
     transition-duration: 0.7s;
     opacity: 1;
 }
-/*.map_container.hide {*/
-/*    opacity: 0;*/
-/*}*/
 
-/*.info {*/
-/*    position: fixed;*/
-/*    top: 10px;*/
-/*    left: 10px;*/
-/*}*/
 
 /*
 style for topic modeling
@@ -272,7 +253,7 @@ style for topic modeling
 style for term topic link
 */
 #term-topic-link{
-    height:100%;
+    height: 850px;
 }
 
 .link-bar-highlighted {
@@ -315,7 +296,8 @@ style for heatmap
     display: flex;
     grid-template-columns: 1fr 1fr;
 }
-#term-topic-heatmap-title:before {
+
+#topic-modeling-title:before {
     content:"    ";
     display: block;
     height:200px;
@@ -328,11 +310,9 @@ style for heatmap
 
 /* Distribution */
 .general-profit-section {
-    height: 300px;
     display: flex;
     grid-template-columns: 1fr 1fr;
     grid-column-gap: 10px;
-    margin-top: 50px;
 
 }
 
@@ -356,7 +336,7 @@ style for heatmap
   white-space: nowrap;
 }
 .distrBar{
-    height: 200px;
+    height: 150px;
 }
 
 
@@ -405,9 +385,17 @@ style for heatmap
     }
 }
 .circle-highlight {
-    animation: fade 600ms infinite;
+    fill-opacity: 0.7;
+    fill: red;
+    /*animation: fade 600ms infinite;*/
 }
-
+.circle-highlight > text {
+    fill-opacity:1;
+    color: black;
+    font-weight: bold;
+    text-anchor: middle;
+    stroke: black;
+}
 /*
 * style for compmap btn
 */
@@ -435,6 +423,9 @@ a:hover {
   background-color: #ffffff;
   cursor: pointer;
   white-space: nowrap;
+    width: 15rem;
+    height: 1.5rem;
+    text-align: center;
 }
 
 .dd-button:after {
@@ -486,6 +477,7 @@ a:hover {
   padding: 10px 20px;
   cursor: pointer;
   white-space: nowrap;
+  width: 150px;
 }
 
 .dd-menu li:hover {
@@ -506,3 +498,54 @@ a:hover {
 ul li {
     list-style-type:none;
 }
+#compmap-btn {
+    font-size: 1.3rem;
+    color: grey;
+    font-weight: bold;
+    margin: auto 70px;
+    padding: 30px;
+    margin-top: -30px;
+}
+
+#compmap-btn > label {
+    order: 1; /*Put the labels first*/
+	/*padding: 1rem 2rem;*/
+	margin-right: 0.2rem;
+	cursor: pointer;
+    transition: background ease 0.2s;
+
+}
+
+.dd-menu-ul {
+    display: flex;
+    width: 800px;
+    flex-wrap: wrap;
+    padding-right: 40px;
+    font-size: 1rem;
+}
+
+.dd-menu-tabs {
+    margin: 20px 20px;
+}
+.dd-menu-tabs > label {
+    order: 1;
+    padding: 10px 10px;
+    border-bottom: 3px grey solid;
+    font-size: 1.1rem;
+    color: grey;
+    margin-right: 30px;
+}
+
+
+.dd-menu-tabs > input[type="radio"] {
+	display: none;
+    /*visibility: hidden;*/
+}
+
+.dd-menu-tabs > input[class="dd-menu-tab-click"] + label {
+    color: black;
+    border-bottom: 3px black solid;
+}
+/*.dd-menu-tabs > input[type="radio"]:checked + label + ul {*/
+/*	display: block;*/
+/*}*/

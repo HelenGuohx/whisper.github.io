@@ -91,11 +91,11 @@ class CompanyMap {
 
 
 		let compTag = svg.append("g")
-			.attr('id', 'circle-group')
-			.attr("fill", "brown")
+			.attr("fill", "steelblue")
 			.attr("fill-opacity", 0.5)
 			.attr("stroke", "#fff")
 			.attr("stroke-width", 0.5)
+			.attr('id', 'circle-group')
 			.selectAll("circle")
 			.data(data)
 			.enter()
@@ -112,6 +112,7 @@ class CompanyMap {
 			})
 		;
 
+
 		compTag.append('circle')
 			.attr("r", d => radius(+d["Revenues(m)"])) //radius(d["Revenues(m)"])
 			.append('title')
@@ -119,38 +120,17 @@ class CompanyMap {
 				+ "Location: " + d.City + ', ' + d.State + '\n'
 				+ "Revenues(m): " + "$" + format(d["Revenues(m)"]));
 
-		this.updateSelectedComp()
+		// compTag.append('text')
+		// 	.text(d => d.Company_Name)
+		// 	.attr('fill', 'black')
+			// .attr('text-anchor','middle')
+		// ;
+
+		// this.updateSelectedComp()
 
 
 	};
 
-	addBlurEffect() {
-		// 创建defs
-		var defs = this.svg.append("defs");
-		// 添加模糊滤镜
-		var filterBlur = defs.append('filter')
-			.attr('id', 'filterBlur')
-			.attr('x', -1.2)
-			.attr('y', -1.2)
-			.attr('width', 4)
-			.attr('height', 4);
-		// 添加辅助滤镜
-		filterBlur.append('feOffset')
-			.attr('result', 'offOut')
-			.attr('in', 'SourceGraphic')
-			.attr('dx', 0)
-			.attr('dy', 0);
-		// 添加模糊滤镜
-		filterBlur.append('feGaussianBlur')
-			.attr('result', 'blurOut')
-			.attr('in', 'SourceGraphic')
-			.attr('stdDeviation', 2);
-		// 添加辅助滤镜
-		filterBlur.append('feBlend')
-			.attr('in', 'SourceGraphic')
-			.attr('in2', 'blurOut')
-			.attr('mode', 'multiply');
-	}
 
 	/*
 	* params:seletedComp rank as id for each company
@@ -158,19 +138,26 @@ class CompanyMap {
 	updateSelectedComp() {
 		//get selection value
 		// let compId = 1;
-		let compId = d3.select('.dd-button').attr('value');
-		console.log('compId', compId);
+		let compId = JSON.parse(d3.select('.dd-button').attr('value') );
+		console.log("comp", compId);
 
 		//remove highlighted circle
 		let hc = this.svg.select('#circle-group').selectAll('g')
 			.attr('class', 'circle-highlight-no')
+			;
+		hc.selectAll('text').remove();
+
 		;
 		console.log('svg hc', hc);
 
 		//highlight selected company
-		this.svg.select(`g[id=circle${compId}]`)
-			// .append('circle')
+		this.svg.select(`g[id=circle${compId.Rank}]`)
+			.raise()
 			.attr('class','circle-highlight')
+			.append('text')
+			.text(compId.Company_Name)
+			.attr('fill', 'black')
+
 		;
 
 

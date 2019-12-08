@@ -12,15 +12,6 @@ class Distribution{
         // Initializes the svg elements required for this chart
         this.distrDiv = d3.select(".general-profit-section")
 
-        //fetch the svg bounds
-        // this.svgBounds = distrDiv.node().getBoundingClientRect();
-        // this.svgWidth = this.svgBounds.width;
-        // this.svgHeight = this.svgBounds.height;
-
-        // this.distrSVG = this.distrDiv.append("svg")
-        //     .attr("height", this.svgHeight - this.margin.bottom)
-        //     .attr("width", this.svgWidth - this.margin.right)
-        // ;
 
     }
 
@@ -34,9 +25,13 @@ class Distribution{
         this.distPlot(1);
         this.distPlot(2);
 
+
+
     }
 
     distPlot(attr = 1) {
+        let distr = this;
+        console.log("distr", distr);
         //range function
         let range = (start, end, step) => {
             let size = Math.ceil((end - start) / step);
@@ -45,10 +40,13 @@ class Distribution{
 
         let bar1 = this.distrDiv.select(`#attr${attr}`)
             .select(".distrBar");
-        let attributes = ["Profits(B)", "Revenues(B)", "Employee_Num", "Assets(B)"];
+        let attributes = ["Profits(B)", "Revenues(B)", "Employee_Number", "Assets(B)"];
 
 
         let attr1Div = this.distrDiv.select(`#attr${attr}`);
+        console.log("attr1Div", attr1Div);
+        attr1Div.selectAll('.dropdown-btn').remove();
+
         attr1Div.select(".dropdownDistr")
             .insert("select", "svg")
             .attr("id", `opts${attr}`)
@@ -59,13 +57,16 @@ class Distribution{
             .append("option")
             .attr("value", d => d)
             .text(d => d)
-
+        ;
+        // change after rendering;
         d3.select(`#opts${attr}`).on("change", dropdownChange);
 
         function dropdownChange() {
+            console.log("dropdownChange", this);
             var selectedAttr = d3.select(this).property('value');
             // console.log(selectedAttr);
             updateDistrPlot(selectedAttr);
+            distr.updateDistrBar(attr);
         };
 
         let compInfo = this.companyInfo;
@@ -85,23 +86,6 @@ class Distribution{
                 .append("g")
                 .attr("transform", `translate(${margin.left}, ${margin.top})`)
             ;
-            //
-
-            //
-            // let selectedStates = [];
-            // let x = 20;
-            // for(let state of orderedResult) {
-            //   if(x+state.Total_EV*2 > selected[0] && x+state.Total_EV*2 < selected[1]){
-            //     selectedStates.push(state.State);
-            //   } else if(x > selected[0] && x < selected[1]) {
-            //     selectedStates.push(state.State);
-            //   }
-            //   x = x+state.Total_EV*2;
-            //
-            // }
-            // console.log(selectedStates)
-            // shiftChart.update(selectedStates);
-            // }
 
 
             //clean data
@@ -162,13 +146,23 @@ class Distribution{
 
             console.log("Bins", bins);
             // // append the bar rectangles to the svg element
-            barHist1.selectAll("rect")
+            barHist1.append('g')
+                .attr('class', 'bar-group')
+                .selectAll("rect")
                 .data(bins)
                 .enter()
-                .append("rect")
+                .append("g")
                 .attr("class", "dist-bars")
+                .attr('id', d => {
+                    // console.log('bins d', d);
+                    // console.log('bins d', d[0]);
+                    let ranks = '';
+                    d.forEach(ele => ranks += 'rank' + ele.Rank + '-');
+                    return ranks
+                })
                 .attr("x", 1)
                 .attr("transform", d => `translate(${xScale(d.x0)}, ${svgHeight - margin.top - margin.bottom}) scale(1, -1)`)
+                .append('rect')
                 .attr("width", function (d) {
                     return xScale(d.x1) - xScale(d.x0) - 3;
                 })
@@ -183,10 +177,11 @@ class Distribution{
 
             // console.log("BIns", bins);
 
+
             // Brush and Selection
             let brush = d3.brushX().extent([[0, 0], [svgWidth - margin.right - margin.left, svgHeight]]).on("end", brushed);
             barHist1.append("g").attr("class", `brush${attr}`).call(brush);
-            console.log("Hello")
+            console.log("brush success");
 
             let scaleBrush = d3.scaleLinear()
                 .domain([0, svgWidth - margin.right - margin.left])
@@ -196,9 +191,8 @@ class Distribution{
             //
             function brushed(d) {
                 console.log("BIns", bins);
-                console.log("BIns", bins[0].x0);
+                console.log("BIns x0", bins[0].x0);
                 // console.log(d)
-                console.log("World")
                 let selected = d3.event.selection;
                 console.log("Brush", selected);
 
@@ -228,15 +222,52 @@ class Distribution{
                 console.log("Companies", compList)
 
             }
+
         }
-
-
-        updateDistrPlot("Profits(B)")
+    updateDistrPlot("Profits(B)");
 
         function clearBars() {
             d3.selectAll(`#barHist${attr}`).remove();
         }
+
+
     }
+
+    updateDistrBar(attr=1){
+        // get company
+        let format = d3.format('.0s');
+        let compId = JSON.parse(d3.select('.dd-button').attr('value') );
+		console.log("updateDistrBar compId", compId);
+		// console.log("select rank", `rect[class*=rank${compId.Rank}]`);
+
+        addCompbarHist(attr, compId.Rank);
+
+        function addCompbarHist(attr=1, rankId = 1, selectedAttr = 'Profits(B)') {
+            let barHist = d3.select(`#attr${attr}`);
+            console.log('barHist', barHist);
+
+            // let barHistValue = barHist.select('.dropdown-btn'); // get barHist select value
+            // console.log('barHistValue', barHistValue.node().value);
+            // console.log('barHistValue', barHistValue.property("value")); valid
+
+
+            let bars = barHist.select(`#barHist${attr}`).selectAll('.bar-group > g');
+            let selected = bars.filter(function (d) {
+                    // console.log('filter d', d);
+                    // console.log("this", this.id);
+                    return this.id.includes('rank' + rankId + '-')
+
+            });
+             console.log('selected bar', selected);
+             bars.selectAll('rect').style('fill', 'steelblue');
+             selected.select('rect').style('fill', 'red');
+
+        }
+
+
+    }
+
+
 }
 
 
